@@ -4,13 +4,13 @@ import { Table, Dialog, Message } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from '@/components/ContainerTitle';
 import styles from './index.module.scss';
-import {apiGetStockList, apiDeletePersonStock} from "@/api/input";
+import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input";
 
 function MemberList(props) {
   const [dataSource, setDataSource] = useState({});
 
   useEffect(() => {
-    apiGetStockList({}).then(res => {
+    apiGetPersonStockList({}).then(res => {
       setDataSource(res)
     })
   },[]);

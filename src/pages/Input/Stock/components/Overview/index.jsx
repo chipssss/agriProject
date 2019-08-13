@@ -1,26 +1,29 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@alifd/next';
 import styles from './index.module.scss';
+import {apiGetPersonStockSum} from "@/api/input";
 
 const { Row, Col } = Grid;
 
-const mockData = [
-  {
-    title: '总条目数(条)',
-    value: '187',
-  },
-  {
-    title: '总农资数(个)',
-    value: '62',
-  },
-  {
-    title: '总金额(元)',
-    value: '23',
-  }
-];
 
+/**
+ * pattern sum: {
+ *     "totalAmount": 157.08,
+ *     "totalEntries": 2,
+ *     "totalInputs": 15.4
+ * }
+ *
+ * @returns {*}
+ * @constructor
+ */
 export default function Overview() {
+  const [sum, setSum] = useState({});
+
+  useEffect(() => {
+    apiGetPersonStockSum().then(res => setSum(res));
+  }, [])
+
   return (
     <IceContainer className={styles.container}>
       <Row>
@@ -32,16 +35,24 @@ export default function Overview() {
             />
           </div>
         </Col>
-        {mockData.map((item, index) => {
-          return (
-            <Col l="4" key={index}>
-              <div className={styles.item}>
-                <p className={styles.itemTitle}>{item.title}</p>
-                <p className={styles.itemValue}>{item.value}</p>
-              </div>
-            </Col>
-          );
-        })}
+        <Col l="4">
+          <div className={styles.item}>
+            <p className={styles.itemTitle}>总条目数（条）</p>
+            <p className={styles.itemValue}>{sum.totalEntries}</p>
+          </div>
+        </Col>
+        <Col l="4">
+          <div className={styles.item}>
+            <p className={styles.itemTitle}>总农资数（个）</p>
+            <p className={styles.itemValue}>{sum.totalInputs}</p>
+          </div>
+        </Col>
+        <Col l="4">
+          <div className={styles.item}>
+            <p className={styles.itemTitle}>总金额（元）</p>
+            <p className={styles.itemValue}>{sum.totalAmount}</p>
+          </div>
+        </Col>
       </Row>
     </IceContainer>
   );

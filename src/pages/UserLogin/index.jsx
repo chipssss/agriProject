@@ -9,10 +9,8 @@ import {
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import styles from './index.module.scss';
 import {apiLogin} from "@/api/user";
-import stores from '@/stores'
 
 function UserLogin(props) {
-  const user = stores.useStore('user');
 
   const [formValue, setFormValue] = useState({
     phonenum: '',

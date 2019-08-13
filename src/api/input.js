@@ -13,12 +13,20 @@ import {COOKIE_KEY} from "@/base/constants";
  *  pageNum	number	页码 默认1
  *  pageSize	number	每页显示数量 默认为10
  */
-export function apiGetStockList(params) {
+export function apiGetPersonStockList(params) {
   // 设置source
   params.sourceId = cookie.get(COOKIE_KEY.USER_ID);
   params.source = 0;
 
-  return post('input/infoGet.do', params);
+  return post('portal/input/infoGet.do', params);
+}
+
+export function apiGetPersonStockSum() {
+  // 设置source
+  return post('portal/input/sumGet.do', {
+    sourceId: cookie.get(COOKIE_KEY.USER_ID),
+    source: 0
+  })
 }
 
 /**
@@ -29,7 +37,7 @@ export function apiGetStockList(params) {
  * source	是	int	0为表示用户，1表示企业
  */
 export function apiDeletePersonStock(idVal) {
-  return post('input/inputDel.do', {
+  return post('portal/input/inputDel.do', {
     id: idVal,
     flag: 0,
     source: 0
