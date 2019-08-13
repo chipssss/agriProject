@@ -12,6 +12,7 @@ import InputRecord from '@/pages/Input/Record';
 import Field from '@/pages/Product/Field';
 import NotFound from '@/pages/NotFound';
 import Record from '@/pages/Product/Record';
+import Pick from '@/pages/Product/Pick';
 
 const routerConfig = [
   {
@@ -35,6 +36,7 @@ const routerConfig = [
       { path: '/product/field', component: Field },
       { path: '/setting/my', component: MySetting },
       { path: '/product/record', component: Record },
+      { path: '/product/pick', component: Pick },
       { path: '/', redirect: '/dashboard' },
       { component: NotFound },
     ],

@@ -54,17 +54,12 @@ export default function Lists(props) {
                       <span>农作物: </span>
                       <span>{item.cropName}</span>
                     </div>
-                    <div className={styles.meta}>
-                      <span>时间: </span>
-                      <span>{item.createTime}</span>
-                    </div>
                   </div>
                 </Col>
                 <Col l="8">
                   <div className={styles.operWrap}>
                     <div className={styles.oper}>
-                      <Icon size="xs" type="ashbin" className={styles.operIcon}/>
-                      <span className={styles.operText}>删除</span>
+                      <span className={styles.operText}>{item.createTime}&nbsp;&nbsp;{item.weather}</span>
                     </div>
                     <div className={styles.oper}>
                     </div>

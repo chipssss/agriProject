@@ -25,6 +25,7 @@ const headerMenuConfig = [
 // asideMenuConfig：侧边导航配置
 
 const asideMenuConfig = [
+  { name: '采摘管理', path: '/record/pick', id: 'Menu_1heg1' },
   {
     name: '首页',
     path: '/',
@@ -50,7 +51,8 @@ const asideMenuConfig = [
     icon: 'publish',
     children: [
       { name: '记录', path: '/product/record', id: 'Menu_ohod8' },
-      { name: '田块管理', path: '/product/field', id: 'Menu_y1bnw' }
+      { name: '田块管理', path: '/product/field', id: 'Menu_y1bnw' },
+      { name: '采摘管理', path: '/product/pick', id: 'Menu_y1nw' },
     ],
     id: 'Menu_t0meg',
   },
