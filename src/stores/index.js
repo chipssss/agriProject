@@ -2,9 +2,10 @@
 
 import user from './user.js'
 import Icestore from '@ice/store'
+import option from "@/stores/option";
 
 const icestore = new Icestore();
 // 注册user
 icestore.registerStore('user', user);
-
+icestore.registerStore('option', option)
 export default icestore;

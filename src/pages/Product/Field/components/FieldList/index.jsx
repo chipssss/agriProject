@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import IceContainer from '@icedesign/container';
 import { Table, Dialog, Message } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
-import ContainerTitle from '@/components/ContainerTitle';
+import ContainerTitle from './components/ContainerTitle';
 import styles from './index.module.scss';
 import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input";
 import {apiFieldGetList} from "@/api/product/field";
+import EditDialog from "@/pages/Product/Field/components/FieldList/components/EditDialog";
 
 function FieldList(props) {
   const [fieldList, setFieldList] = useState([]);
@@ -40,19 +41,11 @@ function FieldList(props) {
     });
   };
 
-  const handleModify = (index) => {
-     // 打开弹窗
-  };
 
   const renderOper = (value, index) => {
     return (
       <div>
-        <a
-          onClick={() => handleModify(index)}
-          className={styles.link}
-        >
-          编辑
-        </a>
+        <EditDialog isAdd={false} field={fieldList[index]}/>
         &nbsp;&nbsp;
         <a
           onClick={() => handleDelete(index)}
