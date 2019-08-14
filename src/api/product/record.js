@@ -13,6 +13,7 @@ import cookie from 'js-cookie'
 
 export function apiRecordGetList(params) {
   params.userId = cookie.get(COOKIE_KEY.USER_ID);
+  params.pageSize = 10;
   return post('portal/processRecord/processRecord.do', params);
 }
 

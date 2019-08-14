@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import IceContainer from '@icedesign/container';
-import {Grid, Icon, Pagination} from '@alifd/next';
+import {Grid, Pagination} from '@alifd/next';
 import styles from './index.module.scss';
 import Img from '@icedesign/img'
 import {getImage} from "@/base/utils";
-import {apiRecordGetList} from "@/api/record";
 
 const {Row, Col} = Grid;
 
@@ -33,17 +32,19 @@ const {Row, Col} = Grid;
  */
 export default function Lists(props) {
   const [current, setCurrent] = useState(1);
+  const {recordList, pages, onPageChange} = props;
 
 
   const handlePaginationChange = (current) => {
     setCurrent(current);
+    onPageChange(current);
   };
 
   return (
     <IceContainer>
       <h4 className={styles.cardTitle}>记录列表</h4>
       <div className={styles.contentList}>
-        {props.recordList.map((item, index) => {
+        {recordList.map((item, index) => {
           return (
             <div className={styles.item} key={index}>
               <h6 className={styles.title}>{item.fieldName}</h6>
@@ -100,6 +101,7 @@ export default function Lists(props) {
         })}
       </div>
       <Pagination
+        total={pages}
         className={styles.pagination}
         current={current}
         onChange={handlePaginationChange}

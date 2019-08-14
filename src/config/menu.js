@@ -25,7 +25,6 @@ const headerMenuConfig = [
 // asideMenuConfig：侧边导航配置
 
 const asideMenuConfig = [
-  { name: '采摘管理', path: '/record/pick', id: 'Menu_1heg1' },
   {
     name: '首页',
     path: '/',

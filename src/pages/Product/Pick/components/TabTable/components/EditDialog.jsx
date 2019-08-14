@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Dialog, Button, Form, Input, Field, Select } from '@alifd/next';
+import { Dialog, Button, Form, Field, Select } from '@alifd/next';
 const FormItem = Form.Item;
 
-const field = new Field({});
+const field = new Field({
+  onChange: (name, value) => {
+    field.setValue(`sync`,)
+  }
+});
 const init = field.init;
 
 export default function EditDialog(props) {
@@ -63,7 +67,7 @@ export default function EditDialog(props) {
       >
         <Form field={field}>
           <FormItem label="起始时间：" {...formItemLayout}>
-            <Select style={{width: 400}} {...init('select', {rules:[{required: true, message:'请选择起始时间', trigger:['onBlur']}]})}>
+            <Select style={{width: 400}} defaultValue={"1"}>
               <Select.Option value={"1"}>一个月内</Select.Option>
               <Select.Option value={"2"}>两个月内</Select.Option>
               <Select.Option value={"3"}>三个月内</Select.Option>

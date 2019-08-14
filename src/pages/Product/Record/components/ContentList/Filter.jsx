@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import IceContainer from '@icedesign/container';
 import styles from './index.module.scss';
-import {apiFieldGetList} from "@/api/field";
+import {apiFieldGetList} from "@/api/product/field";
 
 const data = {
   label: '农作物',
