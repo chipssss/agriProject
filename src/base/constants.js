@@ -1,6 +1,7 @@
 export const COOKIE_KEY = {
   USER_ID: "userId",
   SOURCE_TYPE: "userType",
+  SOURCE_ID: "sourceId",
   USER: "user",
 };
 

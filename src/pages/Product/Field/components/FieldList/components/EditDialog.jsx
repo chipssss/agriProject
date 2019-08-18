@@ -20,8 +20,10 @@ const FormItem = Form.Item;
  */
 export default function EditDialog(props) {
   const [fieldVal, setFieldVal] = useState({});
+
   const [visible, setVisible] = useState(false);
-  const [cropList, setCropList] = useState([]);
+  const
+    [cropList, setCropList] = useState([]);
   const {isAdd, field} = props;
   const title = isAdd ? '新增田块' : '田块信息修改';
   const formRef = useRef(null);

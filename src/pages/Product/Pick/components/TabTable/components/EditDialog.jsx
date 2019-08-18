@@ -1,34 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Dialog, Button, Form, Field, Select } from '@alifd/next';
+import {apiPickAddBatch} from "@/api/product/pick";
 const FormItem = Form.Item;
-
-const field = new Field({
-  onChange: (name, value) => {
-    field.setValue(`sync`,)
-  }
-});
-const init = field.init;
 
 export default function EditDialog(props) {
   const { index, record } = props;
   const [visible, setVisible] = useState(false);
   const [dataIndex, setDataIndex] = useState(null);
-  const [validateState, setValidateState] = useState("error");
+  const formEl = useRef(null);
 
   const handleSubmit = () => {
-    field.validate((errors, values) => {
-      if (errors) {
-        console.log('Errors in form!!!');
-        return;
-      }
+    console.debug('current select: ' + selectValue);
+    console.debug('current record: ' + record);
+    apiPickAddBatch(record, selectValue).then(res => {
+      // 添加批次成功
 
-      props.getFormValues(dataIndex, values);
-      setVisible(false);
+    }).catch(err => {
+
     });
+    setVisible(false);
+  };
+
+  let selectValue = 1;
+  const onSelectChange = (value) => {
+    selectValue = value;
   };
 
   const onOpen = (index, record) => {
-    field.setValues({ ...record });
     setVisible(true);
     setDataIndex(index);
   };
@@ -54,7 +52,7 @@ export default function EditDialog(props) {
         type="primary"
         onClick={() => onOpen(index, record)}
       >
-        编辑
+        生成批次
       </Button>
       <Dialog
         style={{ width: 640 }}
@@ -65,9 +63,9 @@ export default function EditDialog(props) {
         onClose={onClose}
         title="生成批次"
       >
-        <Form field={field}>
-          <FormItem label="起始时间：" {...formItemLayout}>
-            <Select style={{width: 400}} defaultValue={"1"}>
+        <Form>
+          <FormItem label="起始时间：" {...formItemLayout} required>
+            <Select style={{width: 400}} defaultValue={"1"} name="select" onChange={onSelectChange}>
               <Select.Option value={"1"}>一个月内</Select.Option>
               <Select.Option value={"2"}>两个月内</Select.Option>
               <Select.Option value={"3"}>三个月内</Select.Option>

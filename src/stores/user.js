@@ -12,11 +12,22 @@ export default {
     image: ''
   },
 
+  /**
+   * 暂时存储第一个企业
+   * 未来会出现一个企业多个员工的模型
+   */
+  enterprise: {
+    id: 0,
+    name: '',
+    role: '员工'
+  },
+
   async init() {
     // init cookie,get user
     this.user = cookie.getJSON(COOKIE_KEY.USER);
     if (this.user) {
       this.initUserType();
+      this.initEnterprise();
     }
   },
 
@@ -45,6 +56,17 @@ export default {
         break;
       default:
         this.user.showType =  '';
+    }
+  },
+
+  initEnterprise() {
+    let enterprises = this.user.enterpriseInfoVOList;
+    if (enterprises !== null && enterprises.length > 0) {
+      // 存储
+      let enterprise = enterprises[0];
+      this.enterprise.id = enterprise.enterpriseId;
+      this.enterprise.name = enterprise.name;
+      this.role = enterprise.role;
     }
   },
 }

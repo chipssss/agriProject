@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import IceContainer from '@icedesign/container';
-import { Tab } from '@alifd/next';
+import { Tab,Message } from '@alifd/next';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
-import data from './data';
 import styles from './index.module.scss'
+import {apiPickGetList} from "@/api/product/pick";
 
 const TabPane = Tab.Item;
 
 const tabs = [
-  { tab: '全部', key: 'all' },
-  { tab: '已发布', key: 'inreview' },
-  { tab: '审核中', key: 'released' },
-  { tab: '已拒绝', key: 'rejected' },
+  { tab: '采摘', key: 'all' },
+  { tab: '已生成批次', key: 'inreview' }
 ];
 
 export default function TabTable() {
-  const [dataSource, setData] = useState(data);
+  const [pickList, setPickList] = useState([]);
   const [tabKey, setTabKey] = useState('all');
 
+  useEffect(() => {
+    apiPickGetList().then(res => {
+      setPickList(res);
+    }).catch(err => Message.error('数据获取失败，' + err))
+  }, []);
+
+
   const getFormValues = (dataIndex, values) => {
-    dataSource[tabKey][dataIndex] = values;
-    setData(dataSource);
+    // dataSource[tabKey][dataIndex] = values;
+    // setData(dataSource);
   };
 
   const handleRemove = (value, index) => {
-    dataSource[tabKey].splice(index, 1);
-    setData(dataSource);
+    pickList[tabKey].splice(index, 1);
+    setPickList(pickList);
   };
 
   const handleTabChange = (key) => {
@@ -36,38 +41,37 @@ export default function TabTable() {
 
   const columns = [
     {
-      title: '标题',
-      dataIndex: 'title',
-      key: 'title',
+      title: '田块名',
+      dataIndex: 'fieldName',
+      key: 'fieldName',
     },
     {
-      title: '作者',
-      dataIndex: 'author',
-      key: 'author',
+      title: '农作物',
+      dataIndex: 'crop',
+      key: 'crop',
     },
     {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
+      title: '操作员',
+      dataIndex: 'userName',
+      key: 'userName',
     },
     {
-      title: '发布时间',
-      dataIndex: 'date',
-      key: 'date',
+      title: '采摘时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
     },
     {
       title: '操作',
       key: 'action',
-      render: (value, index, record) => {
+      dataIndex: 'id',
+      render: (value, index, record, id) => {
         return (
           <span>
             <EditDialog
               index={index}
               record={record}
+              id={id}
               getFormValues={getFormValues}
-            />
-            <DeleteBalloon
-              handleRemove={() => handleRemove(value, index, record)}
             />
           </span>
         );
@@ -83,7 +87,7 @@ export default function TabTable() {
             return (
               <TabPane title={item.tab} key={item.key}>
                 <CustomTable
-                  dataSource={dataSource[tabKey]}
+                  dataSource={pickList}
                   columns={columns}
                   hasBorder={false}
                 />
