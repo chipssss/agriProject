@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 export default function Logo({ style }) {
   return (
     <Link to="/" style={style} className={styles.container}>
-      智慧农业
+      茶叶全产业链信息管理系统
     </Link>
   );
 }

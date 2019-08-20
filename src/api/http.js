@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import QS from 'qs';
 import {SERVER} from "@/base/constants";
 
 /**
@@ -8,7 +7,8 @@ import {SERVER} from "@/base/constants";
  */
 var instance = axios.create({
   baseURL: SERVER.BASE_URL,
-  timeout: '6000',
+  timeout: '6000'
+  // withCredentials: true
 });
 // 设置post请求头
 instance.defaults.headers.post['Content-Type'] = 'application/json';

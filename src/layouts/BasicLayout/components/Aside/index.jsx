@@ -42,7 +42,6 @@ function Aside(props) {
   return (
     <Layout.Aside width="240" theme="light" className={styles.customAside}>
       <div className={styles.asideLogo}>
-        <Logo />
       </div>
       <Nav
         defaultSelectedKeys={[pathname]}

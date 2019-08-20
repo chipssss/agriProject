@@ -2,18 +2,13 @@ import React, {useState, useEffect} from 'react';
 import IceContainer from '@icedesign/container';
 import styles from './index.module.scss';
 import {apiFieldGetList} from "@/api/product/field";
-
-const data = {
-  label: '农作物',
-  value: [
-    '全部',
-    '菜心',
-  ],
-};
+import {apiCropGetExistRecord} from "@/api/product/crop";
 
 export default function Filter(props) {
   const [fieldList, setFieldList] = useState([]);
+  const [cropList, setCropList] = useState([]);
   const [fieldActiveIndex, setFieldActiveIndex] = useState(0);
+  const [cropActiveIndex, setCropActiveIndex] = useState(0);
 
   const screenVal = {
     startTime: null,
@@ -30,13 +25,25 @@ export default function Filter(props) {
       });
       setFieldList(res);
     });
-
+    apiCropGetExistRecord().then(res => {
+      res.unshift({
+        name: "全部",
+        id: 0
+      });
+      setCropList(res);
+    })
   }, []);
 
-  const handleClick = (value,idx) => {
+  const handleFieldClick = (value,idx) => {
     console.log(value);
     setFieldActiveIndex(idx);
     screenVal.fieldId = value.id;
+    props.onScreenChange(screenVal);
+  };
+
+  const handleCropClick = (value, idx) => {
+    setCropActiveIndex(idx);
+    screenVal.cropId = value.id;
     props.onScreenChange(screenVal);
   };
 
@@ -53,7 +60,7 @@ export default function Filter(props) {
                 fieldActiveIndex === idx ? styles.active : null;
               return (
                 <span
-                  onClick={() => handleClick(fieldItem, idx)}
+                  onClick={() => handleFieldClick(fieldItem, idx)}
                   className={`${styles.filterText} ${activeStyle}`}
                   key={idx}
                 >
@@ -68,16 +75,16 @@ export default function Filter(props) {
         >
           <div className={styles.filterLabel}>农作物:</div>
           <div className={styles.filterList}>
-            {data.value.map((text, idx) => {
+            {cropList.map((item, idx) => {
               const activeStyle =
-                fieldActiveIndex === idx ? styles.active : null;
+                cropActiveIndex === idx ? styles.active : null;
               return (
                 <span
-                  onClick={() => handleClick(text)}
+                  onClick={() => handleCropClick(item)}
                   className={`${styles.filterText} ${activeStyle}`}
                   key={idx}
                 >
-                      {text}
+                      {item.name}
                     </span>
               );
             })}

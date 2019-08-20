@@ -43,3 +43,46 @@ export function apiDeletePersonStock(idVal) {
     source: 0
   })
 }
+
+/**
+ * 记录获取， 分角色，企业/个人， 企业经理和负责人能够获取企业的记录
+ * 一次性获取四种类别的记录
+ * source	number	源，0为用户，1为企业
+   sourceId	number	无
+   type	number	判断type，购入/领用/退回/使用 为 1/2/3/4
+ *
+ */
+export function apiInputRecordGetList() {
+  let postVal = {
+    source: cookie.get(COOKIE_KEY.SOURCE_TYPE),
+    sourceId: cookie.get(COOKIE_KEY.SOURCE_ID),
+    type: 1
+  };
+  let resultVal = {
+    buy: null,
+    receive: null,
+    exit: null,
+    use: null
+  };
+  let url = 'portal/input/recordGet.do';
+  return new Promise((resolve, reject) => {
+    post(url, postVal).then(result => {
+      resultVal.buy = result;
+      postVal.type = 2;
+      post(url, postVal).then(result => {
+        resultVal.receive = result;
+        postVal.type = 3;
+        post(url, postVal).then(result => {
+          resultVal.exit = result;
+          postVal.type = 4;
+          post(url, postVal).then(result => {
+            resultVal.use = result;
+            resolve(resultVal)
+          })
+        })
+      })
+    }).catch(err => reject(err));
+  })
+}
+
+

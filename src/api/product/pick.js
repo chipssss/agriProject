@@ -26,7 +26,8 @@ export function apiPickAddBatch(pickRecord, num) {
     name: name,
     fieldId: pickRecord.fieldId,
     plantTime: start,
-    collectTime: pickRecord.createTime
-    // todo 待增加采摘id
+    // substring， 截取时间， 保证时间格式合适
+    collectTime: pickRecord.createTime.substring(0, 10),
+    recoveryRecordId: pickRecord.id
   })
 }

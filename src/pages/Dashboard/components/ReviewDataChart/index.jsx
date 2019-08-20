@@ -60,7 +60,7 @@ export default function ReviewDataChart() {
               style={{ backgroundColor: '#5e83fb' }}
               className={styles.indicator}
             />
-            <span>已完成</span>
+            <span>种植数</span>
           </div>
         </div>
         <div className={styles.coreData}>
@@ -70,7 +70,7 @@ export default function ReviewDataChart() {
               style={{ backgroundColor: '#ee706d' }}
               className={styles.indicator}
             />
-            <span>已邀请</span>
+            <span>采摘数</span>
           </div>
         </div>
         <div className={styles.coreData}>
@@ -80,7 +80,7 @@ export default function ReviewDataChart() {
               style={{ backgroundColor: '#58ca9a' }}
               className={styles.indicator}
             />
-            <span>已回绝</span>
+            <span>入库数</span>
           </div>
         </div>
       </div>

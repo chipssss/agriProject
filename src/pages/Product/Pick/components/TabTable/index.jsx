@@ -10,8 +10,8 @@ import {apiPickGetList} from "@/api/product/pick";
 const TabPane = Tab.Item;
 
 const tabs = [
-  { tab: '采摘', key: 'all' },
-  { tab: '已生成批次', key: 'inreview' }
+  { tab: '采摘', key: 'uncreated' },
+  { tab: '已生成批次', key: 'created' }
 ];
 
 export default function TabTable() {
@@ -19,20 +19,18 @@ export default function TabTable() {
   const [tabKey, setTabKey] = useState('all');
 
   useEffect(() => {
+    requestData();
+  }, []);
+
+  const requestData = () => {
     apiPickGetList().then(res => {
       setPickList(res);
     }).catch(err => Message.error('数据获取失败，' + err))
-  }, []);
+  }
 
 
   const getFormValues = (dataIndex, values) => {
-    // dataSource[tabKey][dataIndex] = values;
-    // setData(dataSource);
-  };
-
-  const handleRemove = (value, index) => {
-    pickList[tabKey].splice(index, 1);
-    setPickList(pickList);
+    requestData();
   };
 
   const handleTabChange = (key) => {
@@ -87,7 +85,7 @@ export default function TabTable() {
             return (
               <TabPane title={item.tab} key={item.key}>
                 <CustomTable
-                  dataSource={pickList}
+                  dataSource={pickList[item.key]}
                   columns={columns}
                   hasBorder={false}
                 />

@@ -18,7 +18,7 @@ export default {
    */
   enterprise: {
     id: 0,
-    name: '',
+    name: '温氏企业',
     role: '员工'
   },
 
@@ -65,8 +65,9 @@ export default {
       // 存储
       let enterprise = enterprises[0];
       this.enterprise.id = enterprise.enterpriseId;
-      this.enterprise.name = enterprise.name;
+      this.enterprise.name = enterprise.enterpriseName;
       this.role = enterprise.role;
+      console.log('enterprise', enterprises)
     }
   },
 }

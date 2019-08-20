@@ -1,22 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { Dialog, Button, Form, Field, Select } from '@alifd/next';
+import { Dialog, Button, Form, Message, Select } from '@alifd/next';
 import {apiPickAddBatch} from "@/api/product/pick";
 const FormItem = Form.Item;
 
 export default function EditDialog(props) {
-  const { index, record } = props;
+  const { index, record, getFormValues } = props;
   const [visible, setVisible] = useState(false);
-  const [dataIndex, setDataIndex] = useState(null);
-  const formEl = useRef(null);
 
   const handleSubmit = () => {
     console.debug('current select: ' + selectValue);
     console.debug('current record: ' + record);
     apiPickAddBatch(record, selectValue).then(res => {
       // 添加批次成功
-
+      Message.success('添加批次成功')
+      getFormValues();
     }).catch(err => {
-
+      Message.error('添加失败，'+ err)
     });
     setVisible(false);
   };
@@ -28,7 +27,6 @@ export default function EditDialog(props) {
 
   const onOpen = (index, record) => {
     setVisible(true);
-    setDataIndex(index);
   };
 
   const onClose = () => {

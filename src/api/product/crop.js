@@ -34,6 +34,10 @@ function convertType(res) {
   return result;
 }
 
+export function apiCropGetExistRecord() {
+  return get('portal/processRecord/getRecordCrop.do');
+}
+
 export function apiCropGetList() {
   return new Promise(((resolve, reject) => {
     get('portal/crop/cropGet.do').then(res => {

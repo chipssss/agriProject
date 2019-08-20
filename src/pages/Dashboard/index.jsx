@@ -5,12 +5,12 @@ import ReviewDetailInfo from './components/ReviewDetailInfo';
 import ReviewOverview from './components/ReviewOverview';
 import ReviewRequestTable from './components/ReviewRequestTable';
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   return (
     <div>
-      <ReviewOverview />
+      <ReviewOverview/>
       <ReviewDetailInfo />
-      <ReviewRequestTable />
+      {/*<ReviewRequestTable />*/}
       <ReviewDataChart />
     </div>
   );

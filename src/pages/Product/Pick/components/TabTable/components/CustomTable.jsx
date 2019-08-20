@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table } from '@alifd/next';
 
 export default function CustomTable(props) {
-  const { columns } = props;
+  const { columns, key } = props;
   const renderColumns = () => {
     return columns.map((item) => {
       if (typeof item.render === 'function') {

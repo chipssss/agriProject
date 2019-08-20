@@ -4,7 +4,7 @@ import { Table, Dialog, Message } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from '@/components/ContainerTitle';
 import styles from './index.module.scss';
-import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input";
+import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input/input";
 
 function MemberList(props) {
   const [dataSource, setDataSource] = useState({});

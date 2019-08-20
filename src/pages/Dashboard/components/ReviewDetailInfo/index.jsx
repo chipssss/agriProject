@@ -9,7 +9,7 @@ export default function ReviewDetailInfo() {
   return (
     <Row wrap gutter="20">
       <Col s="8" xxs="24">
-        <IceContainer className={styles.container} title="好评比率">
+        <IceContainer className={styles.container} title="农资概要">
           <div className={styles.reviewRatingWrapper}>
             <div className={styles.reviewRating}>
               <span className={styles.reviewRatingIcon}>
@@ -22,7 +22,7 @@ export default function ReviewDetailInfo() {
                 <span className={styles.reviewRatingRatePositive}>67%</span>
               </span>
             </div>
-            <div className={styles.reviewRatingDesc}>好评</div>
+            <div className={styles.reviewRatingDesc}>入库</div>
           </div>
           <div className={styles.reviewRatingDivideLine} />
           <div className={styles.reviewRatingWrapper}>
@@ -37,18 +37,18 @@ export default function ReviewDetailInfo() {
                 <span className={styles.reviewRatingRateNegative}>33%</span>
               </span>
             </div>
-            <div className={styles.reviewRatingDesc}>差评</div>
+            <div className={styles.reviewRatingDesc}>出库</div>
           </div>
         </IceContainer>
       </Col>
       <Col s="8" xxs="24">
-        <IceContainer className={styles.container} title="邀评目标">
+        <IceContainer className={styles.container} title="生产概要">
           <div className={styles.reviewTargetProgressWrapper}>
             <Progress
               className={styles.reviewTargetProgress}
               percent={50}
               shape="circle"
-              textRender={() => <span>392 份</span>}
+              textRender={() => <span>392 条</span>}
             />
           </div>
           <div className={styles.reviewRatingGoalDesc}>
@@ -57,7 +57,7 @@ export default function ReviewDetailInfo() {
         </IceContainer>
       </Col>
       <Col s="8" xxs="24">
-        <IceContainer className={styles.container} title="邀评排行">
+        <IceContainer className={styles.container} title="员工绩效">
           <div className={styles.reviewLeaderboard}>
             <div className={styles.reviewLeaderboardItem}>
               <span className={styles.reviewLeaderboardItemAvatar}>
@@ -69,8 +69,8 @@ export default function ReviewDetailInfo() {
                   alt=""
                 />
               </span>
-              <span className={styles.reviewLeaderboardItemName}>李总</span>
-              <span className={styles.reviewLeaderboardItemCount}>912 份</span>
+              <span className={styles.reviewLeaderboardItemName}>李员工</span>
+              <span className={styles.reviewLeaderboardItemCount}>912 条</span>
             </div>
             <div className={styles.reviewLeaderboardItem}>
               <span className={styles.reviewLeaderboardItemAvatar}>
@@ -82,8 +82,8 @@ export default function ReviewDetailInfo() {
                   alt=""
                 />
               </span>
-              <span className={styles.reviewLeaderboardItemName}>王总</span>
-              <span className={styles.reviewLeaderboardItemCount}>675 份</span>
+              <span className={styles.reviewLeaderboardItemName}>王员工</span>
+              <span className={styles.reviewLeaderboardItemCount}>675 条</span>
             </div>
             <div className={styles.reviewLeaderboardItem}>
               <span className={styles.reviewLeaderboardItemAvatar}>
@@ -95,8 +95,8 @@ export default function ReviewDetailInfo() {
                   alt=""
                 />
               </span>
-              <span className={styles.reviewLeaderboardItemName}>赵总</span>
-              <span className={styles.reviewLeaderboardItemCount}>588 份</span>
+              <span className={styles.reviewLeaderboardItemName}>赵员工</span>
+              <span className={styles.reviewLeaderboardItemCount}>588 条</span>
             </div>
             <div className={styles.reviewLeaderboardItem}>
               <span className={styles.reviewLeaderboardItemAvatar}>
@@ -108,8 +108,8 @@ export default function ReviewDetailInfo() {
                   alt=""
                 />
               </span>
-              <span className={styles.reviewLeaderboardItemName}>马总</span>
-              <span className={styles.reviewLeaderboardItemCount}>462 份</span>
+              <span className={styles.reviewLeaderboardItemName}>马员工</span>
+              <span className={styles.reviewLeaderboardItemCount}>462 条</span>
             </div>
             <div className={styles.reviewLeaderboardItem}>
               <span className={styles.reviewLeaderboardItemAvatar}>
@@ -121,8 +121,8 @@ export default function ReviewDetailInfo() {
                   alt=""
                 />
               </span>
-              <span className={styles.reviewLeaderboardItemName}>雷总</span>
-              <span className={styles.reviewLeaderboardItemCount}>376 份</span>
+              <span className={styles.reviewLeaderboardItemName}>雷员工</span>
+              <span className={styles.reviewLeaderboardItemCount}>376 条</span>
             </div>
           </div>
         </IceContainer>

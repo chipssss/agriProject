@@ -1,6 +1,6 @@
 import React from 'react';
-import Members from './components/Members';
+import TabTable from "@/pages/Input/Record/components/TabTable";
 
 export default function InviteTeam() {
-  return <Members />;
+  return <TabTable />;
 }

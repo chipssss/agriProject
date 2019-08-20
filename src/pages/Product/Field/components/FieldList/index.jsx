@@ -4,7 +4,7 @@ import { Table, Dialog, Message } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from './components/ContainerTitle';
 import styles from './index.module.scss';
-import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input";
+import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input/input";
 import {apiFieldGetList} from "@/api/product/field";
 import EditDialog from "@/pages/Product/Field/components/FieldList/components/EditDialog";
 

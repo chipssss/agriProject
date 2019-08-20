@@ -47,16 +47,12 @@ export default function Lists(props) {
         {recordList.map((item, index) => {
           return (
             <div className={styles.item} key={index}>
-              <h6 className={styles.title}>{item.fieldName}</h6>
+              <h4 className={styles.title}>{item.fieldName}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span>农作物: </span>
+                <span>{item.cropName}</span>
+              </h4>
               <Row>
-                <Col l="16">
-                  <div className={styles.metaWrap}>
-                    <div className={styles.meta}>
-                      <span>农作物: </span>
-                      <span>{item.cropName}</span>
-                    </div>
-                  </div>
-                </Col>
                 <Col l="8">
                   <div className={styles.operWrap}>
                     <div className={styles.oper}>
@@ -78,7 +74,7 @@ export default function Lists(props) {
               <Row>
                 <div className={styles.metaWrap}>
                   <div className={styles.meta}>
-                    <span>投入品使用记录: </span>
+                    <span>投入品记录: </span>
                     <span>{item.inputRecord}</span>
                   </div>
                 </div>
