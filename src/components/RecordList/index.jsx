@@ -1,27 +1,36 @@
 import React, {useState, useRef} from 'react';
 import styles from "@/components/RecordList/index.module.scss";
 import {getImage} from "@/base/utils";
-import {Grid, Checkbox} from '@alifd/next'
+import {Grid, Checkbox, Pagination} from '@alifd/next'
 import Img from '@icedesign/img'
+import IceContainer from '@icedesign/container'
 
 const CheckBoxGroup = Checkbox.Group;
 const Row = Grid.Row;
 const Col = Grid.Col;
 
 export default function index(props) {
-  const {recordList} = props;
+  const {recordList, isRoot, pages, onPageChange} = props;
+  const {current, setCurrent} = useState(1);
 
   const onGroupChange = (value) => {
     console.debug('onGroup change: ' + value)
   };
 
+  const handlePaginationChange = (current) => {
+    setCurrent(current);
+    onPageChange(current);
+  };
+
   return (
+    <IceContainer title={"记录列表"}>
     <div>
       <CheckBoxGroup onChange={onGroupChange}>
         {recordList.map((item, index) => {
           return (
             <div className={styles.container}>
-              <Checkbox className={styles.checkbox} value={item.id} id={item.name}/>
+              {isRoot? (<Checkbox className={styles.checkbox} value={item.id} id={item.name}/>
+                ): null}
               <div className={styles.item} key={index}>
                 <h4 className={styles.title}>{item.fieldName}
                   &nbsp;&nbsp;&nbsp;&nbsp;
@@ -74,5 +83,12 @@ export default function index(props) {
         })}
       </CheckBoxGroup>
     </div>
+      <Pagination
+        total={pages}
+        className={styles.pagination}
+        current={current}
+        onChange={handlePaginationChange}
+      />
+    </IceContainer>
 )
 }

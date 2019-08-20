@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Filter from "@/pages/Root/Root/components/Filter";
-import RecordContainer from "@/pages/Root/Root/components/RecordContainer";
 import {apiRecordGetList} from "@/api/product/record";
+import RecordList from '@/components/RecordList'
 
 
 export default function index(props) {
@@ -17,7 +17,7 @@ export default function index(props) {
   return (
     <div>
       <Filter/>
-      <RecordContainer recordList={list}/>
+      <RecordList recordList={list} isRoot={true}/>
     </div>
   );
 }

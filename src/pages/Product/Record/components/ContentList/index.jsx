@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Filter from './Filter';
-import Lists from './Lists';
 import {apiRecordGetList} from "@/api/product/record";
+import RecordList from '@/components/RecordList'
 
 export default function Index() {
   const [recordList, setRecordList] = useState([]);
@@ -30,7 +30,7 @@ export default function Index() {
   return (
     <div>
       <Filter onScreenChange={handleScreenChange} />
-      <Lists recordList={recordList} pages={totalPages} onPageChange={handlePageChange}/>
+      <RecordList recordList={recordList} pages={totalPages} onPageChange={handlePageChange}/>
     </div>
   );
 }
