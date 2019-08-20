@@ -15,12 +15,9 @@ export function apiPickGetList() {
 /**
  * 采摘记录生成批次
  * @param pickRecord 采摘月份
- * @param num， xx个月
+ * @param start
  */
-export function apiPickAddBatch(pickRecord, num) {
-  let currentDate = new Date();
-  currentDate.setMonth(currentDate.getMonth()-num);
-  let start = currentDate.Format('yyyy-MM-dd');
+export function apiPickAddBatch(pickRecord, start) {
   let name = `${pickRecord.fieldName},${pickRecord.crop}${getDate()}`
   return post('portal/processRecord/batchAdd.do', {
     name: name,

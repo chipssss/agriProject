@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import IceContainer from '@icedesign/container';
 import { Tab,Message } from '@alifd/next';
-import CustomTable from './components/CustomTable';
-import EditDialog from './components/EditDialog';
-import DeleteBalloon from './components/DeleteBalloon';
 import styles from './index.module.scss'
-import {apiPickGetList} from "@/api/product/pick";
 import {apiInputRecordGetList} from "@/api/input/input";
+import CustomTable from "@/pages/Product/Pick/components/TabTable/components/CustomTable";
 
 const TabPane = Tab.Item;
 

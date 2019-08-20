@@ -16,7 +16,7 @@ const tabs = [
 
 export default function TabTable() {
   const [pickList, setPickList] = useState([]);
-  const [tabKey, setTabKey] = useState('all');
+  const [tabKey, setTabKey] = useState('uncreated');
 
   useEffect(() => {
     requestData();
@@ -64,6 +64,7 @@ export default function TabTable() {
       dataIndex: 'id',
       render: (value, index, record, id) => {
         return (
+          tabKey === 'uncreated'? (
           <span>
             <EditDialog
               index={index}
@@ -71,14 +72,14 @@ export default function TabTable() {
               id={id}
               getFormValues={getFormValues}
             />
-          </span>
+          </span>): null
         );
       },
     },
   ];
 
   return (
-    <div style={styles.tabtable}>
+    <div>
       <IceContainer>
         <Tab onChange={handleTabChange}>
           {tabs.map((item) => {
