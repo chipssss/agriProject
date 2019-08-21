@@ -103,7 +103,7 @@ export default function EditDialog(props) {
             <DatePicker style={{width: 400}} value={selectDate} onChange={onSelectDateChange}/>
           </FormItem>
 
-          <FormItem label="起始时间：" {...formItemLayout} required>
+          <FormItem label="起始时间：" {...formItemLayout}>
             <Select style={{width: 400}} defaultValue={"1"} name="select" onChange={onSelectChange}>
               <Select.Option value={"1"}>一个月内</Select.Option>
               <Select.Option value={"2"}>两个月内</Select.Option>
