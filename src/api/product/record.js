@@ -17,4 +17,9 @@ export function apiRecordGetList(params) {
   return post('portal/processRecord/processRecord.do', params);
 }
 
+export function apiRecordGetAll(params) {
+  params.userId = cookie.get(COOKIE_KEY.USER_ID);
+  params.pageSize = 999;
+  return post('portal/processRecord/processRecord.do', params);
+}
 

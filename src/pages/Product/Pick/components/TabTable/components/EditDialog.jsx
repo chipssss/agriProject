@@ -1,15 +1,28 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Dialog, Button, Form, Message, Select, DatePicker , Input} from '@alifd/next';
+import React, {useState, useRef, useEffect} from 'react';
+import {Dialog, Button, Form, Message, Select, DatePicker, Timeline, Radio} from '@alifd/next';
 import {apiPickAddBatch} from "@/api/product/pick";
+
 const FormItem = Form.Item;
-import moment from 'moment'
+import IceContainer from '@icedesign/container'
+import {apiRecordGetAll} from "@/api/product/record";
+
+const TimelineItem = Timeline.Item;
+const RadioGroup = Radio.Group;
 
 export default function EditDialog(props) {
-  const { index, record, getFormValues } = props;
+  const {index, record, getFormValues} = props;
   const [visible, setVisible] = useState(false);
   const [selectDate, setSelectDate] = useState('');
+  const [recordList, setRecordList] = useState([]);
+
   useEffect(() => {
     setSelectDate(getRecentDate(1));
+
+    // 获取生产记录, 做时间轴
+    apiRecordGetAll({
+      endTime: record.createTime.substring(0, 10),
+      fieldId: record.fieldId,
+    }).then(res => setRecordList(res.list))
   }, []);
 
 
@@ -19,7 +32,7 @@ export default function EditDialog(props) {
    */
   const getRecentDate = (num) => {
     let currentDate = new Date();
-    currentDate.setMonth(currentDate.getMonth()-num);
+    currentDate.setMonth(currentDate.getMonth() - num);
     return currentDate.Format('yyyy-MM-dd');
   };
 
@@ -29,7 +42,7 @@ export default function EditDialog(props) {
       Message.success('添加批次成功')
       getFormValues();
     }).catch(err => {
-      Message.error('添加失败，'+ err)
+      Message.error('添加失败，' + err)
     });
     setVisible(false);
   };
@@ -41,6 +54,11 @@ export default function EditDialog(props) {
   const onSelectDateChange = (value) => {
     console.debug('current date', value);
     setSelectDate(value)
+  };
+
+  const onRadioChange = (time) => {
+    console.debug('click time: ' + time);
+    setSelectDate(time.substring(0,10))
   };
 
   const onOpen = (index, record) => {
@@ -57,7 +75,7 @@ export default function EditDialog(props) {
     },
     wrapperCol: {
       span: 14,
-    }
+    },
   };
 
 
@@ -71,13 +89,14 @@ export default function EditDialog(props) {
         生成批次
       </Button>
       <Dialog
-        style={{ width: 640 }}
+        style={{width: 640}}
         visible={visible}
         onOk={handleSubmit}
         closeable="esc,mask,close"
         onCancel={onClose}
         onClose={onClose}
         title="生成批次"
+        isFullScreen={true}
       >
         <Form>
           <FormItem label={"起始时间："} {...formItemLayout} required>
@@ -94,6 +113,20 @@ export default function EditDialog(props) {
             </Select>
           </FormItem>
         </Form>
+
+        <IceContainer title={"生产记录时间轴"}>
+          <RadioGroup onChange={onRadioChange}>
+          <Timeline fold={[{foldArea: [1, 2], foldShow: false}, {foldArea: [5], foldShow: false}]}>
+              {recordList.map((item, index) => {
+                return (
+                  <TimelineItem title={"操作记录：" + item.operation} time={item.createTime}
+                    dot={<Radio value={item.createTime}/>}
+                  />
+                )
+              })}
+          </Timeline>
+          </RadioGroup>
+        </IceContainer>
       </Dialog>
     </div>
   );
