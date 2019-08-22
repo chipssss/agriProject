@@ -7,8 +7,8 @@ import {COOKIE_KEY} from "@/base/constants";
 
 export default {
   user: {
-    username: 'lin',
-    type: '1',
+    username: '',
+    type: '',
     image: ''
   },
 
@@ -18,8 +18,8 @@ export default {
    */
   enterprise: {
     id: 0,
-    name: '温氏企业',
-    role: '员工'
+    name: '无',
+    role: '无'
   },
 
   async init() {
@@ -29,6 +29,11 @@ export default {
       this.initUserType();
       this.initEnterprise();
     }
+  },
+
+  updateUsername(username) {
+    this.user.username = username;
+    cookie.set(COOKIE_KEY.USER, this.user)
   },
 
   initUserType() {
@@ -66,8 +71,8 @@ export default {
       let enterprise = enterprises[0];
       this.enterprise.id = enterprise.enterpriseId;
       this.enterprise.name = enterprise.enterpriseName;
-      this.role = enterprise.role;
-      console.log('enterprise', enterprises)
+      this.enterprise.role = enterprise.role;
+      console.debug('data enterprise', enterprises)
     }
   },
 }

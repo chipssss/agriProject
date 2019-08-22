@@ -8,7 +8,7 @@ import {
 } from '@icedesign/form-binder';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import styles from './index.module.scss';
-import {apiLogin} from "@/api/user";
+import {apiLogin} from "@/api/user/user";
 
 function UserLogin(props) {
 

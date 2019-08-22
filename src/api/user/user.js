@@ -42,5 +42,13 @@ export function apiLogin(params) {
   }))
 }
 
+export function apiUpdateUsername(username) {
+  return post('portal/user/updateInfo.do', {
+    key: 'username',
+    value: username,
+    userId: cookie.get(COOKIE_KEY.USER_ID)
+  })
+}
+
 
 

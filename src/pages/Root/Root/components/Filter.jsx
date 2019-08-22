@@ -1,18 +1,37 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ContainerTitle from "@/components/ContainerTitle";
 import IceContainer from '@icedesign/container'
 import style from './index.module.scss'
 import {Select} from '@alifd/next'
+import {apiGetAllBatch} from "@/api/batch/batch";
+const SelectItem = Select.Option;
 
 export default function Filter(props) {
+  const {getRootList} = props;
+  const [batchList, setBatchList] = useState([]);
 
+  useEffect(() => {
+    // 获取用户批次，并自动拉取第一个批次的待溯源信息
+    apiGetAllBatch().then(res => {
+      setBatchList(res);
+      if (res && res.length > 0) {
+        getRootList(res[0].id)
+      }
+    })
+  });
 
   return (
     <IceContainer title={"精确筛选"}>
       <div>
         <div className={style.filterItem}>
           <div className={style.filterLabel}>批次</div>
-          <Select className={style.filterDataItem}/>
+          <Select className={style.filterDataItem}>
+            {batchList.map((value, index) => {
+              return (
+                <SelectItem value={value}>{value.name}</SelectItem>
+              )
+            })}
+          </Select>
         </div>
       </div>
     </IceContainer>
