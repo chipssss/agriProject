@@ -4,13 +4,13 @@ import { Table, Dialog, Message } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from '@/components/ContainerTitle';
 import styles from './index.module.scss';
-import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input/input";
+import {apiGetStockList, apiDeleteStock} from "@/api/input/input";
 
 function MemberList(props) {
   const [dataSource, setDataSource] = useState({});
 
   useEffect(() => {
-    apiGetPersonStockList({}).then(res => {
+    apiGetStockList({}).then(res => {
       setDataSource(res)
     })
   },[]);
@@ -26,7 +26,7 @@ function MemberList(props) {
       onOk: () => {
         const data = [...dataSource];
         console.log(index);
-        apiDeletePersonStock(data[index].id)
+        apiDeleteStock(data[index].id)
           .then(res => {
             // 删除成功
             data.splice(index, 1);

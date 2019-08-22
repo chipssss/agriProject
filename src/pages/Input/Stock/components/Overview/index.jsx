@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid } from '@alifd/next';
 import styles from './index.module.scss';
-import {apiGetPersonStockSum} from "@/api/input/input";
+import {apiGetStockSum} from "@/api/input/input";
 
 const { Row, Col } = Grid;
 
@@ -21,7 +21,7 @@ export default function Overview() {
   const [sum, setSum] = useState({});
 
   useEffect(() => {
-    apiGetPersonStockSum().then(res => setSum(res));
+    apiGetStockSum().then(res => setSum(res));
   }, [])
 
   return (

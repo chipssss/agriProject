@@ -4,7 +4,7 @@ import { Table, Dialog, Message } from '@alifd/next';
 import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from './components/ContainerTitle';
 import styles from './index.module.scss';
-import {apiGetPersonStockList, apiDeletePersonStock} from "@/api/input/input";
+import {apiGetStockList, apiDeleteStock} from "@/api/input/input";
 import {apiFieldGetList} from "@/api/product/field";
 import EditDialog from "@/pages/Product/Field/components/FieldList/components/EditDialog";
 
@@ -26,7 +26,7 @@ function FieldList(props) {
       onOk: () => {
         const data = [...dataSource];
         console.log(index);
-        apiDeletePersonStock(data[index].id)
+        apiDeleteStock(data[index].id)
           .then(res => {
             // 删除成功
             data.splice(index, 1);
