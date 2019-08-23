@@ -1,4 +1,4 @@
-import {post} from "@/api/http";
+import {get, post} from "@/api/http";
 import cookie from 'js-cookie'
 import {COOKIE_KEY} from "@/base/constants";
 
@@ -87,4 +87,53 @@ export function apiInputRecordGetList() {
   })
 }
 
+/**
+ * 获取农资类别，并转化成级联选项格式
+ * @returns {Promise<unknown>}
+ */
+export function apiInputGetCate() {
+  return new Promise(((resolve, reject) => {
+    get('portal/input/categoryInfo.do').then(res => {
+      let data = [];
+      // 转换数据格式
+      res.map((item, index) => {
+        let dataItem = {
+          "value": item.inputFirstCate.id,
+          "label": item.inputFirstCate.name,
+          "children": []
+        };
+        item.inputSecondCates.map((item, index) => {
+          dataItem.children.push({
+            "value": item.id,
+            "label": item.name
+          })
+        });
+        if (dataItem.children.length > 0) {
+          data.push(dataItem)
+        }
+      })
+      resolve(data);
+    }).catch(reject)
+  }))
+}
 
+/**
+ * 格式
+ * categoryId	是	int	类别id
+   name	是	string	名称
+   specification	是	string	昵称
+   price	是	decimal	价格
+   productionTime	是	date	生产日期 规范：1999-01-01
+   shelfLife	是	int	保质期
+   manufacturer	是	string	生产厂商
+   remark	否	string	备注，描述
+   source	是	int	来源,默认为0用户添加，1企业领用
+   sourceId	否	int	企业投入品信息id
+   quantity	是	number	农资数量
+ * @param params
+ */
+export function apiInputPurchase(params) {
+  params.source = cookie.get(COOKIE_KEY.SOURCE_TYPE);
+  params.sourceId = cookie.get(COOKIE_KEY.SOURCE_ID);
+  return post('portal/input/purchase.do',params);
+}

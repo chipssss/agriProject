@@ -1,26 +1,31 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import IceContainer from '@icedesign/container';
-import { Grid, Input, Button, Message, Select } from '@alifd/next';
+import { Grid, Input, Button, Message, Select, CascaderSelect, DatePicker } from '@alifd/next';
 import {
   FormBinderWrapper,
   FormBinder,
   FormError,
 } from '@icedesign/form-binder';
 import styles from './index.module.scss';
+import {apiInputGetCate, apiInputPurchase} from "@/api/input/input";
 
 const { Row, Col } = Grid;
 
 export default function SimpleFluencyForm() {
+  const [cateList, setCateList] = useState([]);
   const [formValue] = useState({
     name: '',
-    shortName: '',
+    specification: '',
+    manufacturer: ''
   });
   const formEl = useRef(null);
 
-  const formChange = (value) => {
-    console.log(value);
-  };
+  useEffect(() => {
+    apiInputGetCate().then(res => setCateList(res))
+  }, []);
 
+
+  // 提交数据
   const handleSubmit = () => {
     formEl.current.validateAll((errors, values) => {
       if (errors) {
@@ -29,20 +34,33 @@ export default function SimpleFluencyForm() {
       }
 
       console.log('values:', values);
-      Message.success('提交成功');
+      apiInputPurchase(values).then(res => Message.success('添加成功'))
+        .catch(err => Message.error('添加失败,' + err))
     });
   };
 
+  const onCascaderSelectChange = (value) => {
+    console.log('selectValue id: ' + value)
+  };
+  const numberValidator = (rule, value, callback) => {
+    if (!value) {
+      callback(new Error('不能为空'))
+    }
+    if (!Number.isInteger(parseInt(value))) {
+      callback(new Error('请输入整数'))
+    }
+    callback()
+  };
   return (
-    <IceContainer title="新增库存" className={styles.form}>
+    <IceContainer title="新增库存"  className={styles.form}>
       <FormBinderWrapper
         ref={formEl}
         value={formValue}
-        onChange={formChange}
       >
         <div className={styles.formContent}>
           <Row className={styles.formRow}>
             <Col l="2" className={styles.formLabel}>
+              <span className={styles.formLabelRequired}>*</span>
               <span>名称：</span>
             </Col>
             <Col l="5">
@@ -57,34 +75,27 @@ export default function SimpleFluencyForm() {
 
           <Row className={styles.formRow}>
             <Col l="2" className={styles.formLabel}>
+              <span className={styles.formLabelRequired}>*</span>
               <span>类别：</span>
             </Col>
-            <Col l="3">
-                <Select></Select>
+            <Col l="5">
+              <FormBinder name="categoryId" required message="请选择农资类别">
+              <CascaderSelect dataSource={cateList} style={{ width: '300px' }}
+                  onChange={onCascaderSelectChange}/>
+              </FormBinder>
             </Col>
-              <Col l="3">
-                <Select></Select>
-            </Col>
-              <Col l="3">
-                <FormBinder name="name" required message="必填项">
-                <Select></Select>
-                </FormBinder>
-              </Col>
-              <div className={styles.formErrorWrapper}>
-                <FormError name="name" />
-              </div>
           </Row>
 
           <Row className={styles.formRow}>
             <Col l="2" className={styles.formLabel}>
+              <span className={styles.formLabelRequired}>*</span>
               <span>数量：</span>
             </Col>
             <Col l="5">
               <FormBinder
-                type="number"
-                name="email"
+                name="quantity"
                 required
-                message="请输入正确的数量"
+                validator={numberValidator}
               >
                 <Input
                   maxLength={20}
@@ -93,27 +104,123 @@ export default function SimpleFluencyForm() {
                 />
               </FormBinder>
               <div className={styles.formErrorWrapper}>
-                <FormError name="email" />
+                <FormError name="quantity" />
               </div>
             </Col>
           </Row>
 
           <Row className={styles.formRow}>
             <Col l="2" className={styles.formLabel}>
-              <span>角色：</span>
+              <span className={styles.formLabelRequired}>*</span>
+              <span>价格：</span>
             </Col>
             <Col l="5">
-              <FormBinder name="role">
-                <Select style={{ width: '300px' }}>
-                  <Select.Option value="member">评测员</Select.Option>
-                  <Select.Option value="owner">主理人</Select.Option>
-                </Select>
+              <FormBinder
+                name="price" required validator={numberValidator}
+              >
+                <Input
+                  placeholder="单位：元"
+                  style={{ width: '300px' }}
+                />
+              </FormBinder>
+              <div className={styles.formErrorWrapper}>
+                <FormError name="price" />
+              </div>
+            </Col>
+          </Row>
+
+          <Row className={styles.formRow}>
+            <Col l="2" className={styles.formLabel}>
+              <span className={styles.formLabelRequired}>*</span>
+              <span>生产时间：</span>
+            </Col>
+            <Col l="5">
+              <FormBinder
+                name="productionTime">
+                <DatePicker
+                  style={{ width: '300px' }}
+                />
               </FormBinder>
               <div className={styles.formErrorWrapper}>
                 <FormError name="role" />
               </div>
             </Col>
           </Row>
+
+          <Row className={styles.formRow}>
+            <Col l="2" className={styles.formLabel}>
+              <span className={styles.formLabelRequired}>*</span>
+              <span>保质期：</span>
+            </Col>
+            <Col l="5">
+              <FormBinder
+                required validator={numberValidator}
+                name="shelfLife">
+                <Input
+                  placeholder="单位：月"
+                  style={{ width: '300px' }}
+                />
+              </FormBinder>
+              <div className={styles.formErrorWrapper}>
+                <FormError name="role" />
+              </div>
+            </Col>
+          </Row>
+
+
+          <Row className={styles.formRow}>
+            <Col l="2" className={styles.formLabel}>
+              <span>规格：</span>
+            </Col>
+            <Col l="5">
+              <FormBinder
+                name="specification">
+                <Input
+                  placeholder="选填"
+                  style={{ width: '300px' }}
+                />
+              </FormBinder>
+              <div className={styles.formErrorWrapper}>
+                <FormError name="role" />
+              </div>
+            </Col>
+          </Row>
+
+
+          <Row className={styles.formRow}>
+            <Col l="2" className={styles.formLabel}>
+              <span>厂商：</span>
+            </Col>
+            <Col l="5">
+              <FormBinder
+                name="manufacturer">
+                <Input
+                  placeholder="选填"
+                  style={{ width: '300px' }}
+                />
+              </FormBinder>
+              <div className={styles.formErrorWrapper}>
+                <FormError name="role" />
+              </div>
+            </Col>
+          </Row>
+
+          <Row className={styles.formRow}>
+            <Col l="2" className={styles.formLabel}>
+              <span>备注：</span>
+            </Col>
+            <Col l="5">
+              <FormBinder
+                name="remark">
+                <Input
+                  placeholder="选填"
+                  style={{ width: '300px' }}
+                />
+              </FormBinder>
+            </Col>
+          </Row>
+
+
           <Row>
             <Col offset="2">
               <Button onClick={handleSubmit} type="primary">
