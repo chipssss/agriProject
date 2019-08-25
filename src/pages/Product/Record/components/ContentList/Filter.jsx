@@ -42,6 +42,7 @@ export default function Filter(props) {
   };
 
   const handleCropClick = (value, idx) => {
+    console.debug('crop click', idx)
     setCropActiveIndex(idx);
     screenVal.cropId = value.id;
     props.onScreenChange(screenVal);
@@ -80,7 +81,7 @@ export default function Filter(props) {
                 cropActiveIndex === idx ? styles.active : null;
               return (
                 <span
-                  onClick={() => handleCropClick(item)}
+                  onClick={() => handleCropClick(item,idx)}
                   className={`${styles.filterText} ${activeStyle}`}
                   key={idx}
                 >

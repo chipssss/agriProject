@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {Dialog, Button, Form, Message, Select, DatePicker, Timeline, Radio} from '@alifd/next';
-import {apiPickAddBatch} from "@/api/product/pick";
+import {apiPickAddBatch, apiPickGetRecord} from "@/api/product/pick";
 
 const FormItem = Form.Item;
 import IceContainer from '@icedesign/container'
@@ -19,9 +19,8 @@ export default function EditDialog(props) {
     setSelectDate(getRecentDate(1));
 
     // 获取生产记录, 做时间轴
-    apiRecordGetAll({
-      endTime: record.createTime.substring(0, 10),
-      fieldId: record.fieldId,
+    apiPickGetRecord({
+      fieldId: record.fieldId
     }).then(res => setRecordList(res.list))
   }, []);
 

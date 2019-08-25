@@ -1,5 +1,5 @@
 /** 采摘相关的api数据处理 **/
-import {post} from "@/api/http";
+import {get, post} from "@/api/http";
 import cookie from 'js-cookie'
 import {COOKIE_KEY} from "@/base/constants";
 import {getDate} from "@/base/utils";
@@ -27,4 +27,15 @@ export function apiPickAddBatch(pickRecord, start) {
     collectTime: pickRecord.createTime.substring(0, 10),
     recoveryRecordId: pickRecord.id
   })
+}
+
+/**
+ * 获取用于生成批次的生产记录（筛选过已经生成批次的信息）
+ * @param fieldId 必填，田块id
+ * @returns {*|Promise|Promise<unknown>}
+ */
+export function apiPickGetRecord(fieldId) {
+  return get('portal/processRecord/getRecordUngenerated.do', {
+    fieldId: fieldId
+  });
 }
