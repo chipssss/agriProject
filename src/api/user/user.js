@@ -29,9 +29,11 @@ function initSource(res) {
 }
 
 export function apiLogin(params) {
-  params.password = md5(params.password);
   return new Promise(((resolve, reject) => {
-    post('portal/user/login.do', params)
+    post('portal/user/login.do', {
+      phonenum: params.phonenum,
+      password: md5(params.password)
+    })
       .then(res => {
         // 登陆成功, 缓存到cookie中
         cookie.set(COOKIE_KEY.USER_ID, res.userId);

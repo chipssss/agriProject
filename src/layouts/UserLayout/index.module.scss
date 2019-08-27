@@ -2,11 +2,26 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
   min-width: 1200px;
   height: 100vh;
-  background-image: url(./image/bg.jpg);
+  background-image: url(./image/bg.png);
   background-size: cover;
+}
+
+.img {
+  width: 80px;
+  height: 78px;
+  background-image: url(./image/logo.png);
+  background-size: contain;
+}
+
+.title {
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 26px;
 }
 
 .mask {

@@ -19,9 +19,9 @@ export default function EditDialog(props) {
     setSelectDate(getRecentDate(1));
 
     // 获取生产记录, 做时间轴
-    apiPickGetRecord({
-      fieldId: record.fieldId
-    }).then(res => setRecordList(res.list))
+    apiPickGetRecord(
+      record.fieldId
+    ).then(setRecordList)
   }, []);
 
 

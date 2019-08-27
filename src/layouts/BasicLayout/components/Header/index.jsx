@@ -6,10 +6,7 @@ import IceImg from '@icedesign/img';
 import {headerMenuConfig} from '@/config/menu.js';
 import Logo from '../Logo';
 import styles from './index.module.scss';
-import stores from '@/stores'
 import {getImage} from "@/base/utils";
-import cookie from 'js-cookie'
-import {COOKIE_KEY} from "@/base/constants";
 
 /**
  * 初始化user store, 检验用户登陆跳转

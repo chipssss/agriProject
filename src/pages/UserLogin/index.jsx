@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { Input, Button, Checkbox, Message } from '@alifd/next';
 import {
@@ -9,19 +9,29 @@ import {
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import styles from './index.module.scss';
 import {apiLogin} from "@/api/user/user";
+import {cookieClear, cookieGetUserForm, cookieSaveForm} from "@/cookieStores/user";
 
 function UserLogin(props) {
 
   const [formValue, setFormValue] = useState({
     phonenum: '',
     password: '',
-    checkbox: false,
+    checkbox: true,
   });
   const formEl = useRef(null);
 
   const formChange = (value) => {
     setFormValue(value);
   };
+
+  useEffect(() => {
+    // 初始化
+    let form = cookieGetUserForm();
+    console.debug('form Value: ' + form)
+    if (form) {
+      setFormValue(form);
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +41,13 @@ function UserLogin(props) {
         return;
       }
       console.log(values);
+      // 存储
+      if (formValue.checkbox) {
+        cookieSaveForm(formValue);
+      } else {
+        cookieClear();
+      }
+
       apiLogin(formValue).then(res => {
         // 登陆成功
         Message.success('登录成功');
@@ -55,7 +72,6 @@ function UserLogin(props) {
 
   return (
     <div className={styles.container}>
-      <h4 className={styles.title}>登 录</h4>
       <IceFormBinderWrapper
         value={formValue}
         onChange={formChange}
@@ -67,7 +83,7 @@ function UserLogin(props) {
             <IceFormBinder name="phonenum" required validator ={checkPhone}>
               <Input
                 maxLength={11}
-                placeholder="手机号"
+                placeholder="账号"
                 className={styles.inputCol}
               />
             </IceFormBinder>
@@ -100,9 +116,14 @@ function UserLogin(props) {
             >
               登 录
             </Button>
-            <Link to="/user/register" className={styles.tips}>
-              立即注册
-            </Link>
+
+            <div className={styles.registerBox}>
+              <span className={styles.noAccountLabel}>没有账号？</span>
+              <span className={styles.toRegister}>立即注册</span>
+            </div>
+            {/*<Link to="/user/register" className={styles.tips}>*/}
+            {/*  立即注册*/}
+            {/*</Link>*/}
           </div>
         </div>
       </IceFormBinderWrapper>
