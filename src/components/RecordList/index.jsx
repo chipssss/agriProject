@@ -70,8 +70,8 @@ export default function index(props) {
                     // 条件渲染， 避免images为null时报错
                     item.images ? (item.images.map((item, index) => {
                       return (
-                        <Col l="4">
-                          <Img type="contain" width={200} height={200} src={getImage(item)}> </Img>
+                        <Col l="4" className={styles.imageItem}>
+                          <Img type="cover" className={styles.imageItem} width={200} height={200} src={getImage(item)}> </Img>
                         </Col>
                       );
                     })) : null
