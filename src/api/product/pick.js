@@ -35,9 +35,11 @@ export function apiPickAddBatch(pickRecord, start) {
  * @returns {*|Promise|Promise<unknown>}
  */
 export function apiPickGetRecord(fieldId) {
-  return get('portal/processRecord/getRecordsUngenratedByField.do', {
+  return new Promise((resolve, reject) => post('portal/processRecord/getRecordsUngenratedByField.do', {
     fieldId: fieldId,
     pageSize: 1,
     pageNum: 999
-  });
+    }).then(res => resolve(res.list))
+      .catch(reject)
+  );
 }

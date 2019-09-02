@@ -4,6 +4,7 @@ import IceContainer from '@icedesign/container'
 import style from './index.module.scss'
 import {Select} from '@alifd/next'
 import {apiGetAllBatch} from "@/api/batch/batch";
+import {apiRootGetUnGeneratedBatchList} from "@/api/root/root";
 const SelectItem = Select.Option;
 
 export default function Filter(props) {
@@ -12,12 +13,7 @@ export default function Filter(props) {
 
   useEffect(() => {
     // 获取用户批次，并自动拉取第一个批次的待溯源信息
-    apiGetAllBatch().then(res => {
-      setBatchList(res);
-      if (res && res.length > 0) {
-        getRootList(res[0].id)
-      }
-    })
+    apiRootGetUnGeneratedBatchList().then(setBatchList)
   });
 
   return (

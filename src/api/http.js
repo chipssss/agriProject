@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {SERVER} from "@/base/constants";
+import history from "@/base/history";
+import {Message} from '@alifd/next'
 
 /**
  * 封装axios请求
@@ -43,6 +45,10 @@ export function get(url, params) {
 function handleResponse(res, resolve, reject) {
   if (res.data.status === CODE.SUCCESS) {
     resolve(res.data.data);
+  } else if (res.data.status === CODE.NEED_LOGIN) {
+    // 登陆超时，请重新登陆
+    history.push('/#/user/login')
+    Message.warning('登陆超时，请重新登陆')
   } else {
     reject(res.data.msg);
   }
@@ -61,5 +67,5 @@ export function post(url, params) {
 }
 
 const CODE = {
-  SUCCESS: 0,
+  SUCCESS: 0, NEED_LOGIN: 10,
 };

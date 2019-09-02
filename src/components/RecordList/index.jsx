@@ -18,7 +18,7 @@ export default function index(props) {
   };
 
   const handlePaginationChange = (current) => {
-    setCurrent(current);
+    // setCurrent(current);
     onPageChange(current);
   };
 
