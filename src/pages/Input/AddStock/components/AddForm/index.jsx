@@ -8,9 +8,14 @@ import {
 } from '@icedesign/form-binder';
 import styles from './index.module.scss';
 import {apiInputGetCate, apiInputPurchase} from "@/api/input/input";
-
+import {numberValidator} from '@/base/utils'
 const { Row, Col } = Grid;
 
+/**
+ * 表单校验可以参考该界面功能
+ * @returns {*}
+ * @constructor
+ */
 export default function SimpleFluencyForm() {
   const [cateList, setCateList] = useState([]);
   const [formValue] = useState({
@@ -42,17 +47,8 @@ export default function SimpleFluencyForm() {
   const onCascaderSelectChange = (value) => {
     console.log('selectValue id: ' + value)
   };
-  const numberValidator = (rule, value, callback) => {
-    if (!value) {
-      callback(new Error('不能为空'))
-    }
-    if (!Number.isInteger(parseInt(value))) {
-      callback(new Error('请输入整数'))
-    }
-    callback()
-  };
   return (
-    <IceContainer title="新增库存"  className={styles.form}>
+    <IceContainer title="新增库存" className={styles.form}>
       <FormBinderWrapper
         ref={formEl}
         value={formValue}
@@ -80,8 +76,8 @@ export default function SimpleFluencyForm() {
             </Col>
             <Col l="5">
               <FormBinder name="categoryId" required message="请选择农资类别">
-              <CascaderSelect dataSource={cateList} style={{ width: '300px' }}
-                  onChange={onCascaderSelectChange}/>
+                <CascaderSelect dataSource={cateList} style={{ width: '300px' }}
+                                onChange={onCascaderSelectChange}/>
               </FormBinder>
             </Col>
           </Row>

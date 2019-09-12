@@ -14,7 +14,7 @@ export default function Filter(props) {
   useEffect(() => {
     // 获取用户批次，并自动拉取第一个批次的待溯源信息
     apiRootGetUnGeneratedBatchList().then(setBatchList)
-  });
+  }, []);
 
   return (
     <IceContainer title={"精确筛选"}>

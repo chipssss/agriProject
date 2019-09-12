@@ -17,15 +17,15 @@ export function apiPickGetList() {
  * @param pickRecord 采摘月份
  * @param start
  */
-export function apiPickAddBatch(pickRecord, start) {
-  let name = `${pickRecord.fieldName},${pickRecord.crop}${getDate()}`
+export function apiPickAddBatch(pickRecord, formVal) {
   return post('portal/processRecord/batchAdd.do', {
-    name: name,
+    quantity: formVal.quantity,
     fieldId: pickRecord.fieldId,
-    plantTime: start,
+    plantTime: formVal.plantTime,
     // substring， 截取时间， 保证时间格式合适
     collectTime: pickRecord.createTime.substring(0, 10),
-    recoveryRecordId: pickRecord.id
+    recoveryRecordId: pickRecord.id,
+    finish: 0,
   })
 }
 
