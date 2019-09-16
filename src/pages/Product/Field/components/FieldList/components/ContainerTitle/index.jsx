@@ -5,12 +5,12 @@ import styles from './index.module.scss';
 import EditDialog from "@/pages/Product/Field/components/FieldList/components/EditDialog";
 
 const ContainerTitle = ({ title, style, ...props }) => {
-  const {cropList} = props;
+  const {cropList, updateData} = props;
 
   return (
     <div className={`${styles.container} ${style}`}>
       <h3 className={styles.title}>{title}</h3>
-      <EditDialog cropList={cropList} isAdd={true}/>
+      <EditDialog updateData={updateData} cropList={cropList} isAdd={true}/>
     </div>
   );
 };

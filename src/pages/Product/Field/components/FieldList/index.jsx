@@ -13,11 +13,17 @@ function FieldList(props) {
   const [fieldList, setFieldList] = useState([]);
   const [cropList, setCropList] = useState([]);
   useEffect(() => {
-    apiFieldGetList().then(res => setFieldList(res));
+    updateData();
 
     // 获取农作物列表
     apiCropGetSelectOptionList().then(res => setCropList(res))
   },[]);
+
+  // 更新田块列表数据
+  const updateData = () => {
+    console.log('update field data')
+    apiFieldGetList().then(res => setFieldList(res));
+  };
 
   const handleAdd = () => {
 
@@ -49,7 +55,7 @@ function FieldList(props) {
   const renderOper = (value, index) => {
     return (
       <div>
-        <EditDialog cropList={cropList} isAdd={false} field={fieldList[index]}/>
+        <EditDialog cropList={cropList} updateData={updateData} isAdd={false} field={fieldList[index]}/>
         &nbsp;&nbsp;
         <a
           onClick={() => handleDelete(index)}
@@ -68,6 +74,7 @@ function FieldList(props) {
         buttonText="新增"
         className={styles.title}
         cropList={cropList}
+        updateData={updateData}
         onClick={handleAdd}
       />
       <Table dataSource={fieldList} hasHeader={true} hasBorder={false}>

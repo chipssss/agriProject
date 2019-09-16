@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Button, Dialog, Form, Input, Select} from '@alifd/next'
+import {Button, Dialog, Form, Input, Select, Message} from '@alifd/next'
 import stores from '@/stores'
 
 /**
@@ -9,6 +9,7 @@ import stores from '@/stores'
  */
 import {FormBinderWrapper, FormBinder, FormError} from '@icedesign/form-binder'
 import {apiCropGetSelectOptionList} from "@/api/product/crop";
+import {apiHandleFieldChange} from "@/api/product/field";
 
 const FormItem = Form.Item;
 /**
@@ -25,7 +26,7 @@ export default function EditDialog(props) {
   const {cropList} = props;
   const [cropId, setCropId] = useState([]);
 
-  const {isAdd, field} = props;
+  const {isAdd, field, updateData} = props;
   const title = isAdd ? '新增田块' : '田块信息修改';
   const formRef = useRef(null);
 
@@ -61,8 +62,17 @@ export default function EditDialog(props) {
         console.debug('error', values)
         return;
       }
+
+      // 提交数据
+      apiHandleFieldChange(values, isAdd).then(res => {
+        Message.success(isAdd ? '添加成功' : '修改成功');
+        setVisible(false);
+      }).catch(err => {
+        Message.warning('添加失败，' + err);
+        updateData();
+        setVisible(false);
+      })
       console.debug('value', values);
-      setVisible(false);
     })
   };
 
