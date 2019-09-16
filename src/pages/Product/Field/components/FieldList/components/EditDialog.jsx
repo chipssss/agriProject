@@ -99,7 +99,7 @@ export default function EditDialog(props) {
             </FormItem>
             <FormItem label="农作物">
               <FormBinder name="cropId" valuePropName="cropId" setFiledValue={cropId => setCrop(cropId)}>
-                <Select dataSource={cropList}/>
+                <Select dataSource={cropList} style={{width: '100%'}}/>
               </FormBinder>
             </FormItem>
             <FormItem label="管理人">
