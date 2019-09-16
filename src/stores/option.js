@@ -1,4 +1,4 @@
-import {apiCropGetList} from "@/api/product/crop";
+import {apiCropGetSelectOptionList} from "@/api/product/crop";
 
 // 选择项常量的内存缓存
 export default {

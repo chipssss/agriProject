@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Button, Dialog, Form, Input, CascaderSelect} from '@alifd/next'
+import {Button, Dialog, Form, Input, Select} from '@alifd/next'
 import stores from '@/stores'
 
 /**
@@ -8,7 +8,7 @@ import stores from '@/stores'
  * doc: https://ice.work/component/formbinder
  */
 import {FormBinderWrapper, FormBinder, FormError} from '@icedesign/form-binder'
-import {apiCropGetList} from "@/api/product/crop";
+import {apiCropGetSelectOptionList} from "@/api/product/crop";
 
 const FormItem = Form.Item;
 /**
@@ -22,25 +22,34 @@ export default function EditDialog(props) {
   const [fieldVal, setFieldVal] = useState({});
 
   const [visible, setVisible] = useState(false);
-  const
-    [cropList, setCropList] = useState([]);
+  const {cropList} = props;
+  const [cropId, setCropId] = useState([]);
+
   const {isAdd, field} = props;
   const title = isAdd ? '新增田块' : '田块信息修改';
   const formRef = useRef(null);
 
-  // const optionStore = stores.useStore('option');
 
   console.debug('field value: ' + field);
   useEffect(() => {
     if (field) {
       setFieldVal(field);
+      setCropId(field.cropId)
       console.debug('set field value success')
     }
-
-    apiCropGetList().then(res => {
-      setCropList(res);
-    }).catch(err => console.error('errors', err));
   },[]);
+
+  const setCrop = cropId => {
+    // 遍历寻找cropName
+  debugger
+    console.debug('find crop name')
+    cropList.map(item => {
+      if (item.value === cropId) {
+        return item.label;
+      }
+    });
+    return '';
+  };
 
   const onOpen = (index, record) => {
     setVisible(true);
@@ -88,12 +97,9 @@ export default function EditDialog(props) {
               </FormBinder>
               <FormError name="name"/>
             </FormItem>
-            <FormItem label="农作物类别">
-                <CascaderSelect dataSource={cropList}/>
-            </FormItem>
             <FormItem label="农作物">
-              <FormBinder name="crop">
-                <Input placeholder="选填"/>
+              <FormBinder name="cropId" valuePropName="cropId" setFiledValue={cropId => setCrop(cropId)}>
+                <Select dataSource={cropList}/>
               </FormBinder>
             </FormItem>
             <FormItem label="管理人">

@@ -38,14 +38,30 @@ export function apiCropGetExistRecord() {
   return get('portal/processRecord/getRecordCrop.do');
 }
 
-export function apiCropGetList() {
+/**
+ * 获取农作物列表，返回格式
+ * [
+ {label:'option1', value:'option1'},
+ {label:'option2', value:'option2'},
+ {label:'disabled', disabled:true}
+ ];
+ * @returns {Promise<unknown>}
+ */
+export function apiCropGetSelectOptionList() {
   return new Promise(((resolve, reject) => {
-    get('portal/crop/cropGet.do').then(res => {
+    get('portal/crop/getIndustrialParkCrop.do').then(res => {
       // 数据转换，转换为符合级联格式的数据格式
+      let data = [];
       if (res) {
-        res = convertType(res);
+        // 转化成 Select Option 格式
+        res.map(obj => {
+          data.push({
+            label: obj.name,
+            value: obj.id,
+          })
+        })
       }
-      resolve(res);
+      resolve(data);
     }).catch(err => {
       console.error('error', err);
       reject(err);

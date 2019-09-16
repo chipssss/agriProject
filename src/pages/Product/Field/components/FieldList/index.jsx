@@ -7,12 +7,16 @@ import styles from './index.module.scss';
 import {apiGetStockList, apiDeleteStock} from "@/api/input/input";
 import {apiFieldGetList} from "@/api/product/field";
 import EditDialog from "@/pages/Product/Field/components/FieldList/components/EditDialog";
+import {apiCropGetSelectOptionList} from "@/api/product/crop";
 
 function FieldList(props) {
   const [fieldList, setFieldList] = useState([]);
-
+  const [cropList, setCropList] = useState([]);
   useEffect(() => {
-    apiFieldGetList().then(res => setFieldList(res))
+    apiFieldGetList().then(res => setFieldList(res));
+
+    // 获取农作物列表
+    apiCropGetSelectOptionList().then(res => setCropList(res))
   },[]);
 
   const handleAdd = () => {
@@ -45,7 +49,7 @@ function FieldList(props) {
   const renderOper = (value, index) => {
     return (
       <div>
-        <EditDialog isAdd={false} field={fieldList[index]}/>
+        <EditDialog cropList={cropList} isAdd={false} field={fieldList[index]}/>
         &nbsp;&nbsp;
         <a
           onClick={() => handleDelete(index)}
@@ -63,6 +67,7 @@ function FieldList(props) {
         title="田块管理"
         buttonText="新增"
         className={styles.title}
+        cropList={cropList}
         onClick={handleAdd}
       />
       <Table dataSource={fieldList} hasHeader={true} hasBorder={false}>
