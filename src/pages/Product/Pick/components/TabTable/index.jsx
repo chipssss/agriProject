@@ -14,7 +14,7 @@ const tabs = [
   { tab: '已生成批次', key: 'created' }
 ];
 
-export default function TabTable() {
+export default function TabTable(props) {
   const [pickList, setPickList] = useState([]);
   const [tabKey, setTabKey] = useState('uncreated');
 

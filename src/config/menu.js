@@ -40,6 +40,7 @@ const asideMenuConfig = [
       { name: '库存', path: '/input/list', id: 'Menu_jn70o', children: [] },
       { name: '记录', path: '/input/record', id: 'Menu_9yuy3' },
       { name: '新增库存', path: '/input/add', id: 'Menu_ad0r9' },
+      {name: '审核列表', path: '/input/audit', id: 'Menu_ad09'},
     ],
     id: 'Menu_mat6x',
   },

@@ -14,6 +14,7 @@ import NotFound from '@/pages/NotFound';
 import Record from '@/pages/Product/Record';
 import Pick from '@/pages/Product/Pick';
 import Root from '@/pages/Root/Root'
+import Audit from '@/pages/Input/Audit'
 
 const routerConfig = [
   {
@@ -34,6 +35,7 @@ const routerConfig = [
       { path: '/input/list', component: InputStock },
       { path: '/input/record', component: InputRecord },
       { path: '/input/add', component: AddStock },
+      {path: '/input/audit', component: Audit},
       { path: '/product/field', component: Field },
       { path: '/setting/my', component: MySetting },
       { path: '/product/record', component: Record },
