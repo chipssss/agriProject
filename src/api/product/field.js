@@ -15,17 +15,27 @@ export function apiFieldGetList() {
  * @param isAdd true 添加田块
  */
 export function apiHandleFieldChange(obj, isAdd) {
-  obj.isFree = obj.status === 0;
-  obj.isPerson = obj.source === 0;
-  obj.cropThirdCateId = 0;
   obj.userId = cookie.get(COOKIE_KEY.USER_ID);
   return isAdd ? apiFieldAdd(obj) : apiFieldInfoUpdate(obj);
 }
 
 function apiFieldAdd(obj) {
+  // 设置必填参数
+  obj.isPerson = cookie.get(COOKIE_KEY.SOURCE_TYPE) === 0;
+  obj.isFree = true;
+  obj.square = obj.square ? obj.square : 0;
   return post('portal/field/fieldAdd.do', obj);
 }
 
 function apiFieldInfoUpdate(obj) {
+  obj.isPerson = obj.source === 0;
+  obj.isFree = obj.status === 0;
   return post('portal/field/fieldModify.do', obj);
+}
+
+export function apiFieldDelete(fieldId) {
+  // 没有传入id，直接返回
+  if (!fieldId) return;
+
+  return post('portal/field/fieldDel.do', {fieldId: fieldId})
 }

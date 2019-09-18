@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom';
 import ContainerTitle from './components/ContainerTitle';
 import styles from './index.module.scss';
 import {apiGetStockList, apiDeleteStock} from "@/api/input/input";
-import {apiFieldGetList} from "@/api/product/field";
+import {apiFieldDelete, apiFieldGetList} from "@/api/product/field";
 import EditDialog from "@/pages/Product/Field/components/FieldList/components/EditDialog";
 import {apiCropGetSelectOptionList} from "@/api/product/crop";
 
@@ -34,10 +34,11 @@ function FieldList(props) {
     Dialog.confirm({
       content: '确认删除吗',
       onOk: () => {
-        const data = [...dataSource];
+        const data = [...fieldList];
         console.log(index);
-        apiDeleteStock(data[index].id)
+        apiFieldDelete(data[index].id)
           .then(res => {
+            Message.success('删除成功');
             // 删除成功
             data.splice(index, 1);
             // 重新渲染列表

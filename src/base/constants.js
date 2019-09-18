@@ -1,5 +1,9 @@
 export const COOKIE_KEY = {
   USER_ID: "userId",
+  /*
+    0 个人
+    1 企业
+   */
   SOURCE_TYPE: "userType",
   SOURCE_ID: "sourceId",
   USER: "user",

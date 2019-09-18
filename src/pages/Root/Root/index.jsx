@@ -15,6 +15,11 @@ export default function index(props) {
     })
   }, []);
 
+  const onPageChange = (page) => {
+    // update page
+    console.log('current page: ' + page);
+  }
+
   /**
    * 获取生成溯源的信息
    * @param batchId 批次id
@@ -26,7 +31,7 @@ export default function index(props) {
   return (
     <div>
       <Filter/>
-      <RecordList recordList={list} isRoot={true}/>
+      <RecordList recordList={list} isRoot={true} onPageChange={onPageChange}/>
     </div>
   );
 }

@@ -42,7 +42,6 @@ export default function EditDialog(props) {
 
   const setCrop = cropId => {
     // 遍历寻找cropName
-  debugger
     console.debug('find crop name')
     cropList.map(item => {
       if (item.value === cropId) {
@@ -66,12 +65,13 @@ export default function EditDialog(props) {
       // 提交数据
       apiHandleFieldChange(values, isAdd).then(res => {
         Message.success(isAdd ? '添加成功' : '修改成功');
+        updateData();
         setVisible(false);
       }).catch(err => {
         Message.warning('添加失败，' + err);
         updateData();
         setVisible(false);
-      })
+      });
       console.debug('value', values);
     })
   };
@@ -108,7 +108,10 @@ export default function EditDialog(props) {
               <FormError name="name"/>
             </FormItem>
             <FormItem label="农作物">
-              <FormBinder name="cropId" valuePropName="cropId" setFiledValue={cropId => setCrop(cropId)}>
+              <FormBinder name="cropId" valuePropName="crop" setFiledValue={crop => {
+                console.log('setFieldValue');
+                setCrop(crop)
+              }}>
                 <Select dataSource={cropList} style={{width: '100%'}}/>
               </FormBinder>
             </FormItem>
