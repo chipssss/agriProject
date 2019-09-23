@@ -57,7 +57,8 @@ const asideMenuConfig = [
   },
   { name: '溯源管理', icon: 'backward', id: 'Menu_bd1s0',
     children: [
-      {name: '溯源生成', path: '/root/root', id: 'Menu_root'}
+      {name: '溯源生成', path: '/root/root', id: 'Menu_root'},
+      {name: '生成记录', path: '/root/list', id: 'Menu_root'}
     ]
   },
   {
