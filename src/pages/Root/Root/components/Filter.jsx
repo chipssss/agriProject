@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import ContainerTitle from "@/components/ContainerTitle";
 import IceContainer from '@icedesign/container'
 import style from './index.module.scss'
@@ -15,7 +15,7 @@ const SelectItem = Select.Option;
 export default function Filter(props) {
   const [recordlist, setRecordList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const {getRootList, modifyId, BatchId, group} = props;
+  const {updateRecordlist,setCheckgroup, modifyId, BatchId, checkGroup,setCheckbox} = props;
   var List=[];
   const [BatchList, setBatchList] = useState([]);
   const showSuccess = () => Message.success('success');
@@ -24,18 +24,24 @@ export default function Filter(props) {
 
   //生成溯源
   const createResult=()=>{
+    console.log(checkGroup)
     var params={
       batchId:BatchId,
-      recordIds:group
+      recordIds:checkGroup
     };
-
-    traceGenerate(params).then(res=>{
-      console.log(res)
-      showSuccess();
-    }).catch(function (error) {
+    if(checkGroup.length===0){
       showWarning();
-      console.log(error);
-    })
+    }
+    else{
+      traceGenerate(params).then(res=>{
+        console.log(res)
+        showSuccess();
+      }).catch(function (error) {
+        showWarning();
+        console.log(error);
+      })
+    }
+
   }
 
   const requestData = (screenVal) => {
@@ -58,6 +64,9 @@ export default function Filter(props) {
   const onCheck = (value) => {
     console.log('selectValue id: ' + value)
     modifyId(value)
+    updateRecordlist(value);
+    setCheckbox([]);
+    setCheckgroup([]);
   };
 
   const getResult=()=>{

@@ -11,12 +11,13 @@ const Row = Grid.Row;
 const Col = Grid.Col;
 
 export default function index(props) {
-  const {recordList, isRoot, pages, onPageChange ,setGroup ,setPage ,lastpage} = props;
+  const {recordList, isRoot, pages,setCheckbox, onPageChange ,setCheckgroup ,setPage ,lastpage,checkValue} = props;
   const [current, setCurrent] = useState(1);
 
   const onGroupChange = (value) => {
     console.log(value)
-    setGroup(value)
+    setCheckgroup(value);
+    setCheckbox(value)
     //console.debug('onGroup change: ' + value)
   };
 
@@ -26,10 +27,14 @@ export default function index(props) {
     onPageChange(current);
   };
 
+  const unselectAll=(value)=>{
+    console.log(value)
+  }
+
   return (
     <IceContainer title={"记录列表"}>
     <div>
-      <CheckBoxGroup onChange={onGroupChange}>
+      <CheckBoxGroup value={checkValue} onChange={onGroupChange}>
         {recordList.map((item, index) => {
           return (
             <div className={styles.container}>

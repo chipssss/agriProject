@@ -8,23 +8,29 @@ import {getBatchesGenerated ,traceGenerate ,getRecordsUngenratedByBatch} from '@
 export default function index(props) {
   const [list, setList] = useState([]);
   const [BatchId,setBatchId]=useState(null);
-  const [group,setGroup]=useState([]);
+
   const [page,setPage]=useState(1);
   const [lastpage,setLastpage]=useState(1);
+  const [checkGroup,setCheckgroup]=useState([]);//临时保存checkbox值
+  const [checkValue, setCheckBoxValue] = useState([]);//修改checkbox值
   const modifyId=(id)=>{
     setBatchId(id)
   };
-  if(BatchId!=null){
-    getRecordsUngenratedByBatch({
-      batchId:BatchId,
-      pageNum:page,
-      pageSize:10
-    }).then(res => {
-      setList(res.data.data.list);
-      setLastpage(res.data.data.lastPage)
-    })
+  const updateRecordlist=(BatchId)=>{
+    if(BatchId!=null){
+      getRecordsUngenratedByBatch({
+        batchId:BatchId,
+        pageNum:page,
+        pageSize:10
+      }).then(res => {
+        setList(res.data.data.list);
+        setLastpage(res.data.data.lastPage)
+      })
+    }
   }
-
+ const setCheckbox=(value)=>{
+   setCheckBoxValue(value)
+ }
   useEffect(() => {});
     // apiRecordGetList({}).then(res => {
     //   console.log('get res', res)
@@ -37,8 +43,8 @@ export default function index(props) {
    */
   return (
     <div>
-      <Filter modifyId={modifyId} BatchId={BatchId} group={group}/>
-      <RecordList recordList={list} BatchId={BatchId} setBatchId={setBatchId} isRoot={true} setGroup={setGroup} setPage={setPage} lastpage={lastpage}/>
+      <Filter setCheckbox={setCheckbox} updateRecordlist={updateRecordlist} setCheckgroup={setCheckgroup} modifyId={modifyId} BatchId={BatchId} checkGroup={checkGroup}/>
+      <RecordList setCheckbox={setCheckbox} checkValue={checkValue} recordList={list} BatchId={BatchId} setBatchId={setBatchId} isRoot={true} setCheckgroup={setCheckgroup} setPage={setPage} lastpage={lastpage}/>
     </div>
   );
 }
